@@ -6,23 +6,44 @@ while True:
     except:
         print('Enter an integer.')
 
-# input records
+records = []
+
 while True:
-    try:
-        inputString = input('Add an expense or income record with description and amount:\n')
-        records = inputString.split(', ')
-        records = [tuple([x.split(' ')[0], int(x.split(' ')[1])]) for x in records]
+    # input command
+    command = input('\nWhat do you want to do (add / view / delete / exit)? ')
+    # handle different commands
+    if command == 'add':
+        while True:
+            try:
+                # input record
+                record = input('Add an expense or income record with description and amount:\n').split(' ')
+                # add to records
+                records.append(tuple([record[0], int(record[1])]))
+                # update total money
+                totalMoney = totalMoney + int(record[1])
+                break
+            except:
+                print('Invalid format.')
+    elif command == 'view':
+        print('Here\'s your expense and income records:')
+        print('Description              Amount')
+        print('======================== ======')
+        # print records
+        for record in records:
+            print(record[0], ' ' * (25 - len(record[0])), record[1], sep='')
+        print('======================== ======')
+        print(f'Now you have {totalMoney} dollars.')
+    elif command == 'delete':
+        # input record to be deleted
+        record = input('Which record do you want to delete?\n').split(' ')
+        record = tuple([record[0], int(record[1])])
+        try:
+            # remove from records
+            records.remove(record)
+            totalMoney = totalMoney - int(record[1])
+        except:
+            print('This record doesn\'t exist.')
+    elif command == 'exit':
         break
-    except:
-        print('Invalid format.')
-# print(records)
-
-# output records
-print('Here\'s your expense and income records:')
-for record in records:
-    print(f'{record[0]} {record[1]}')
-    # calculate total money
-    totalMoney = totalMoney + int(record[1])
-
-# output current money
-print(f'Now you have {totalMoney} dollars.')
+    else:
+        print('Invalid command.')

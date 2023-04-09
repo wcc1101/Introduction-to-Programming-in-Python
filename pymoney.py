@@ -14,6 +14,7 @@ def initialize():
         # if invalid format
         if os.path.exists('records.txt'):
             print('Invalid format in records.txt. Deleting the contents.')
+            os.remove('records.txt')
         # input initial money
         try:
             initialMoney = int(input('How much money do you have? '))
@@ -60,7 +61,7 @@ def delete(records):
             print(f'There\'s no record with {dscp} {amnt}. Fail to delete a record.')
     except:
         print('Invalid format. Fail to delete a record.')
-        
+
     return records
 
 def save(initialMoney, records):

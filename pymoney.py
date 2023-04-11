@@ -13,13 +13,13 @@ def initialize():
         records = []
         # if invalid format
         if os.path.exists('records.txt'):
-            print('Invalid format in records.txt. Deleting the contents.')
+            sys.stderr.write('Invalid format in records.txt. Deleting the contents.')
             os.remove('records.txt')
         # input initial money
         try:
             initialMoney = int(input('How much money do you have? '))
         except:
-            print('Invalid value for money. Set to 0 by default.')
+            sys.stderr.write('Invalid value for money. Set to 0 by default.')
             initialMoney = 0
 
     return initialMoney, records
@@ -32,9 +32,9 @@ def add(records):
             # add to records
             records.append(tuple([dscp, int(amnt)]))
         except:
-            print('Invalid value for money. Fail to add a record.')
+            sys.stderr.write('Invalid value for money. Fail to add a record.')
     except:
-        print('The format of a record should be like this: breakfast -50. Fail to add a record.')
+        sys.stderr.write('The format of a record should be like this: breakfast -50. Fail to add a record.')
 
     return records
 
@@ -58,9 +58,9 @@ def delete(records):
             # remove from records
             records.remove(tuple([dscp, int(amnt)]))
         except:
-            print(f'There\'s no record with {dscp} {amnt}. Fail to delete a record.')
+            sys.stderr.write(f'There\'s no record with {dscp} {amnt}. Fail to delete a record.')
     except:
-        print('Invalid format. Fail to delete a record.')
+        sys.stderr.write('Invalid format. Fail to delete a record.')
 
     return records
 

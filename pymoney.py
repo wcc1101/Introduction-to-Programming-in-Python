@@ -144,38 +144,19 @@ class Categories:
                 valid = valid or self.is_category_valid(category, c)
             return valid
     
-    def find_subcategories(self, category, categories = []):
+    def find_subcategories(self, category):
         '''find the category and return its subcategories'''
-        if categories == []:
-            categories = self._categories
-        if category == categories:
-            # base case
-            return True
-        elif type(categories) == list:
-            # recursive case
-            for i, c in enumerate(categories):
-                found = self.find_subcategories(category, c)
-                if found == True:
-                    if i + 1 < len(categories) and type(categories[i + 1]) == list:
-                        return self._flatten(categories[i:i + 2])
-                    else:
-                        return [c]
-                if found != []:
-                    return found
-        # base case
-        return []
-    
-    def _flatten(self, L):
-        '''flatten the list L'''
-        if type(L) == list:
-            # recursive case
-            result = []
-            for child in L:
-                result.extend(self._flatten(child))
-            return result
-        else:
-            # base case
-            return [L]    
+        def find_subcategories_gen(category, categories, found = False):
+            if type(categories) == list:
+                for index, child in enumerate(categories):
+                    yield from find_subcategories_gen(category, child, found)
+                    if child == category and index + 1 < len(categories) and type(categories[index + 1]) == list:
+                        yield from find_subcategories_gen(category, categories[index + 1], True)
+            else:
+                if categories == category or found:
+                    yield categories
+            
+        return list(find_subcategories_gen(category, self._categories))
 
 if __name__ == '__main__':
     categories = Categories()

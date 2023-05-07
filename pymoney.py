@@ -49,7 +49,7 @@ def add(records, categories):
         cate, dscp, amnt = input('Add an expense or income record with category, description, and amount (separate by spaces):\n').split(' ')
         # check if category valid
         if not is_category_valid(cate, categories):
-            sys.stderr.write('Invalid category. Fail to add a record.')
+            sys.stderr.write('The specified category is not in the category list.\nYou can check the category list by command "view categories".\nFail to add a record.')
             return records
         try:
             # add to records

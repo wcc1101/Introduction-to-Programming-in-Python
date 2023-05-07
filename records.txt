@@ -1,9 +1,9 @@
 0
 food apple -50
 drink a -90
-income s 100
 meal x -100
 bonus q 1000
 salary e 100
 snack s -8000
 drink a -100
+income s 100
